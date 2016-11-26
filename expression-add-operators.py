@@ -38,7 +38,8 @@ class Solution(object):
             else:
                 combined = [num]
 
-            allCombinations.append(combined)
+            if len(num) == 1 or num[0] != '0':  # LeetCode solution doesn't consider 1*05 = 5 as an acceptable answer
+                allCombinations.append(combined)
 
         return allCombinations
 
