@@ -37,7 +37,6 @@ class Solution(object):
 
         return maxSinglePath
 
-
     def maxPathForNode(self, node):
         if node is None:
             return (None, None)

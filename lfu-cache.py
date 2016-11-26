@@ -10,7 +10,7 @@ class LFUCache(object):
         self.keys = dict()
 
     def get(self, key):
-        value = [-1,0,0]
+        value = [-1, 0, 0]
         if key in self.keys:
             value = self.keys[key]
         value[1] = value[1] + 1
@@ -60,5 +60,4 @@ class LFUCache(object):
             item[0] = value
             item[1] = usage_count
             item[2] = usage_id
-
 
