@@ -12,6 +12,8 @@ class Solution(object):
         elif type(nums) is not list:
             return [nums]
 
+        # print "nums: %s" % (nums)
+
         nums_with_operators = [[p + o for o in self.operators] for p in nums[:-1]] + [[nums[-1]]]
         combinations = list(itertools.product(*nums_with_operators))
         formulas = [''.join(x) for x in combinations]
@@ -35,7 +37,6 @@ class Solution(object):
             combined = []
             if len(combinations) > 0:
                 combined = [[num] + self.flatten([combo]) for combo in combinations]
-                print "combined: %s" % (combined)
             else:
                 combined = [num]
 
@@ -52,9 +53,11 @@ class Solution(object):
         numberCombinations = self.flatten(self.getNumberCombinations(nums, True))
 
         for numberCombination in numberCombinations:
-            formulas = self.getAllFormulas(numberCombination)
-            all_formulas += formulas
+            all_formulas += self.getAllFormulas(numberCombination)
 
+        # print "all_formulas: %s" % (all_formulas)
+        # print
+        print "len(all_formulas): %s" % (len(all_formulas))
         for formula in all_formulas:
             if eval(formula) == target:
                 solutions.append(formula)
@@ -62,6 +65,10 @@ class Solution(object):
         return solutions
 
 if __name__ == '__main__':
+    from time import time
+
+    now = time()
+
     s = Solution()
     print "--------------------------------------------------------------------------------------------------------"
     # print "123, 123:", s.addOperators("123", 123)
@@ -71,5 +78,7 @@ if __name__ == '__main__':
     # print "1235, 29:", s.addOperators("1235", 29)
     # print "[], 5:", s.addOperators("", 5)
     # print "1234", s.addOperators("1234", 10)
-    # print "1234567", s.addOperators("1234567", 1+2+3+4+5+6+7)
-    print "3456237490, 9191:", s.addOperators("3456237490", 9191)
+    print "1234567899", s.addOperators("1234567899", 1+2+3+4+5+6+7+8+9+9)
+    # print "3456237490, 9191:", s.addOperators("3456237490", 9191)
+
+    print "Total time: %s" % str(time() - now)
