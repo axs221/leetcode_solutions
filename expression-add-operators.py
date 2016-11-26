@@ -24,31 +24,32 @@ class Solution(object):
         else:
             return possibly_nested_list
 
-    def getNumberCombinations(self, nums):
+    def getNumberCombinations(self, nums, is_root):
         allCombinations = []
 
         for i in range(len(nums)):
             num = ''.join(nums[:i+1])
             other_nums = nums[i+1:]
-            combinations = self.getNumberCombinations(other_nums)
+            combinations = self.getNumberCombinations(other_nums, False)
 
             combined = []
             if len(combinations) > 0:
-                combined = [[num] + self.flatten(combo) for combo in combinations]
+                combined = [[num] + self.flatten([combo]) for combo in combinations]
+                print "combined: %s" % (combined)
             else:
                 combined = [num]
 
             if len(num) == 1 or num[0] != '0':  # LeetCode solution doesn't consider 1*05 = 5 as an acceptable answer
                 allCombinations.append(combined)
 
-        return allCombinations
+        return allCombinations if is_root else self.flatten(allCombinations)
 
     def addOperators(self, num, target):
         solutions = []
         all_formulas = []
 
         nums = list(num)
-        numberCombinations = self.flatten(self.getNumberCombinations(nums))
+        numberCombinations = self.flatten(self.getNumberCombinations(nums, True))
 
         for numberCombination in numberCombinations:
             formulas = self.getAllFormulas(numberCombination)
@@ -65,7 +66,10 @@ if __name__ == '__main__':
     print "--------------------------------------------------------------------------------------------------------"
     # print "123, 123:", s.addOperators("123", 123)
     # print "123, 6:", s.addOperators("123", 6)
-    print "105, 5:", s.addOperators("105", 5)
+    # print "105, 5:", s.addOperators("105", 5)
     # print "123, 15:", s.addOperators("123", 15)
     # print "1235, 29:", s.addOperators("1235", 29)
     # print "[], 5:", s.addOperators("", 5)
+    # print "1234", s.addOperators("1234", 10)
+    # print "1234567", s.addOperators("1234567", 1+2+3+4+5+6+7)
+    print "3456237490, 9191:", s.addOperators("3456237490", 9191)
